@@ -32,12 +32,14 @@ function saveTasks(tasks) {
 
 //Add task
 program
-    .command("add <task>")
+    .command("add <task...>")
     .description("Add a new task")
     .action((task)=>{
         const tasks = loadTasks();
+
+        const taskjoined = task.join(" ");
         tasks.push({
-            title:task,
+            title:taskjoined,
             done:false,
             createdAt:new Date().toISOString()
         });
@@ -62,7 +64,9 @@ program
     const table = new Table({
       head: ["#", "Task", "Timestamp", "Status"],
       colWidths: [6, 30, 28, 12],
-      style: { head: ["cyan"] }
+      style: { head: ["cyan"] },
+
+
     });
 
     tasks.forEach((task, i) => {
